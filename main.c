@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include "funciones.h"
 
+
 int main() {
-    /* Capacidad fija: 10 productos */
+    // Arreglos para los datos basicos 
     char  nombres[10][30];
     float precios[10];
-    int   n = 0;                 /* cuántos productos están cargados */
+
+    // cuántos productos están cargados actualmente
+    int n = 0;
 
     int opcion = 0;
     int seguir = 1;
@@ -25,18 +28,27 @@ int main() {
         switch (opcion) {
 
         case 1:
+            // Carga de datos; guardamos la cantidad en n
             n = ingresarProductos(nombres, precios, 10);
             break;
 
         case 2: {
-            if (n == 0) { printf("Primero cargue productos (opcion 1).\n"); break; }
+            // Total del inventario
+            if (n == 0) {
+                printf("Primero cargue productos (opcion 1).\n");
+                break;
+            }
             float total = calcularTotal(precios, n);
             printf("Total del inventario: %.2f\n", total);
             break;
         }
 
         case 3: {
-            if (n == 0) { printf("No hay datos.\n"); break; }
+            // Más caro y más barato (mostramos nombre + precio)
+            if (n == 0) {
+                printf("No hay datos.\n");
+                break;
+            }
             int idxMax = indiceMasCaro(precios, n);
             int idxMin = indiceMasBarato(precios, n);
             printf("Mas caro:   %s (%.2f)\n", nombres[idxMax], precios[idxMax]);
@@ -45,28 +57,42 @@ int main() {
         }
 
         case 4: {
-            if (n == 0) { printf("No hay datos.\n"); break; }
+            // Promedio de precios
+            if (n == 0) {
+                printf("No hay datos.\n");
+                break;
+            }
             float prom = calcularPromedio(precios, n);
             printf("Precio promedio: %.2f\n", prom);
             break;
         }
 
         case 5: {
-            if (n == 0) { printf("No hay datos.\n"); break; }
+            // Búsqueda por nombre
+            if (n == 0) {
+                printf("No hay datos.\n");
+                break;
+            }
             char buscado[30];
             printf("Nombre a buscar (sin espacios): ");
             scanf(" %29s", buscado);
+
             int pos = buscarProducto(nombres, precios, n, buscado);
-            if (pos == -1) printf("No existe el producto.\n");
-            else           printf("%s cuesta %.2f\n", nombres[pos], precios[pos]);
+            if (pos == -1) {
+                printf("No existe el producto.\n");
+            } else {
+                printf("%s cuesta %.2f\n", nombres[pos], precios[pos]);
+            }
             break;
         }
 
         case 6:
+            // Mostrar tabla del inventario (función void)
             mostrarTabla(nombres, precios, n);
             break;
 
         case 7:
+            // Salir del programa
             printf("Saliendo...\n");
             seguir = 0;
             break;
